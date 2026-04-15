@@ -1,6 +1,6 @@
 import { equal } from 'node:assert/strict'
 import { test } from 'node:test'
-import { calculateBasketTotal } from './calculateBasketTotal.js'
+import { calculateBasketTotal } from './calculateBasketTotal.ts'
 
 test('Calculates basket total', { concurrency: true }, t => {
   const cases = [
