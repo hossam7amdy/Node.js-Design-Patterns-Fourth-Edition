@@ -1,21 +1,21 @@
 import assert from 'node:assert/strict'
 import { afterEach, beforeEach, suite, test } from 'node:test'
 import { MockAgent, getGlobalDispatcher, setGlobalDispatcher } from 'undici' // v7.6.0
-import { getInternalLinks } from './getPageLinks.js'
+import { getInternalLinks } from './getPageLinks.ts'
 
 suite('getPageLinks', { concurrency: true, timeout: 500 }, () => {
   // naive implementation (real HTTP request)
-  // test('It fetches all the internal links from a page', async () => {
-  //   const links = await getInternalLinks('https://loige.co')
-  //   assert.deepEqual(
-  //     links,
-  //     new Set([
-  //       'https://loige.co/blog',
-  //       'https://loige.co/speaking',
-  //       'https://loige.co/about',
-  //     ])
-  //   )
-  // })
+  test.skip('It fetches all the internal links from a page', async () => {
+    const links = await getInternalLinks('https://loige.co')
+    assert.deepEqual(
+      links,
+      new Set([
+        'https://loige.co/blog',
+        'https://loige.co/speaking',
+        'https://loige.co/about',
+      ])
+    )
+  })
 
   test('It fetches all the internal links from a page', async t => {
     const mockHtml = `
@@ -30,14 +30,14 @@ suite('getPageLinks', { concurrency: true, timeout: 500 }, () => {
     </html>
   `
 
-    t.mock.method(global, 'fetch', async _url => ({
+    t.mock.method(global, 'fetch', async (_url: string) => ({
       ok: true,
       status: 200,
       headers: {
-        get: key =>
+        get: (key: string): string | null =>
           key === 'content-type' ? 'text/html; charset=utf-8' : null,
       },
-      text: async () => mockHtml,
+      text: async (): Promise<string> => mockHtml,
     }))
 
     const links = await getInternalLinks('https://loige.co')
@@ -95,7 +95,7 @@ suite('getPageLinks', { concurrency: true, timeout: 500 }, () => {
 })
 
 suite('example with undici and beforeEach + afterEach', () => {
-  let agent
+  let agent: MockAgent
   const originalGlobalDispatcher = getGlobalDispatcher()
 
   beforeEach(() => {
