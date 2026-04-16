@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import { once } from 'node:events'
-import { suite, test } from 'node:test'
+import { suite, test, mock } from 'node:test'
 import { setImmediate } from 'node:timers/promises'
 import { TaskQueue } from './TaskQueue.ts'
 
@@ -28,6 +28,22 @@ suite('TaskQueue', { concurrency: true, timeout: 500 }, () => {
     assert.ok(task1Completed, 'Task 1 completed')
     assert.ok(task2Completed, 'Task 2 completed')
     await once(queue, 'empty')
+  })
+
+  test('All tasks are executed and empty is emitted (v2)', async () => {
+    const queue = new TaskQueue(2)
+    const task1 = mock.fn(async () => {
+      await setImmediate()
+    })
+    const task2 = mock.fn(async () => {
+      await setImmediate()
+    })
+
+    queue.pushTask(task1).pushTask(task2)
+    await once(queue, 'empty')
+
+    assert.equal(task1.mock.callCount(), 1)
+    assert.equal(task2.mock.callCount(), 1)
   })
 
   test('Respect the concurrency limit', async () => {
