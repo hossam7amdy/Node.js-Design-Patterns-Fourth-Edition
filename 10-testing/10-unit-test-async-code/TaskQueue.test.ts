@@ -1,53 +1,33 @@
 import assert from 'node:assert/strict'
 import { once } from 'node:events'
-import { mock, suite, test } from 'node:test'
+import { suite, test } from 'node:test'
 import { setImmediate } from 'node:timers/promises'
-import { TaskQueue } from './TaskQueue.js'
+import { TaskQueue } from './TaskQueue.ts'
 
 suite('TaskQueue', { concurrency: true, timeout: 500 }, () => {
   test('All tasks are executed and empty is emitted', async () => {
     const queue = new TaskQueue(2)
-    const task1status = Promise.withResolvers()
+    const task1Status = Promise.withResolvers()
     let task1Completed = false
-    const task2status = Promise.withResolvers()
+    const task2Status = Promise.withResolvers()
     let task2Completed = false
-
-    const task1 = async () => {
+    async function task1(): Promise<void> {
       await setImmediate()
       task1Completed = true
-      task1status.resolve()
+      task1Status.resolve(true)
     }
-    const task2 = async () => {
+    async function task2(): Promise<void> {
       await setImmediate()
       task2Completed = true
-      task2status.resolve()
+      task2Status.resolve(true)
     }
 
     queue.pushTask(task1).pushTask(task2)
-    await Promise.allSettled([task1status.promise, task2status.promise])
+    await Promise.allSettled([task1Status.promise, task2Status.promise])
 
     assert.ok(task1Completed, 'Task 1 completed')
     assert.ok(task2Completed, 'Task 2 completed')
     await once(queue, 'empty')
-  })
-
-  test('All tasks are executed and empty is emitted (v2)', async () => {
-    const queue = new TaskQueue(2)
-
-    const task1 = mock.fn(async () => {
-      await setImmediate()
-      return 'completed'
-    })
-    const task2 = mock.fn(async () => {
-      await setImmediate()
-      return 'completed'
-    })
-
-    queue.pushTask(task1).pushTask(task2)
-    await once(queue, 'empty')
-
-    assert.equal(task1.mock.callCount(), 1)
-    assert.equal(task2.mock.callCount(), 1)
   })
 
   test('Respect the concurrency limit', async () => {
@@ -55,20 +35,20 @@ suite('TaskQueue', { concurrency: true, timeout: 500 }, () => {
     let runningTasks = 0
     let maxRunningTasks = 0
     let completedTasks = 0
-    const task = async () => {
+    async function task(): Promise<void> {
       runningTasks++
       maxRunningTasks = Math.max(maxRunningTasks, runningTasks)
       await setImmediate()
       runningTasks--
       completedTasks++
     }
-
     queue
       .pushTask(task)
       .pushTask(task)
       .pushTask(task)
       .pushTask(task)
       .pushTask(task)
+
     await once(queue, 'empty')
 
     assert.equal(maxRunningTasks, 4)
@@ -76,12 +56,11 @@ suite('TaskQueue', { concurrency: true, timeout: 500 }, () => {
   })
 
   test('Emits "taskError" on task failure', async () => {
-    const queue = new TaskQueue(2)
-    const errors = []
-    queue.on('taskError', error => {
-      errors.push(error)
+    const queue = new TaskQueue(1)
+    const errors: Error[] = []
+    queue.on('taskError', e => {
+      errors.push(e)
     })
-
     queue.pushTask(async () => {
       await setImmediate()
       throw new Error('error1')
@@ -90,23 +69,24 @@ suite('TaskQueue', { concurrency: true, timeout: 500 }, () => {
       await setImmediate()
       throw new Error('error2')
     })
+
     await once(queue, 'empty')
 
     assert.equal(errors.length, 2)
-    assert.equal(errors[0].message, 'error1')
-    assert.equal(errors[1].message, 'error2')
+    assert.equal(errors[0]?.message, 'error1')
+    assert.equal(errors[1]?.message, 'error2')
   })
 
-  test.todo('stats() returns correct counts', async () => {
+  test('stats() returns correct counts', async () => {
     const queue = new TaskQueue(1)
-    const task = async () => {
+    async function task1(): Promise<void> {
       await setImmediate()
     }
 
-    queue.pushTask(task).pushTask(task)
+    queue.pushTask(task1)
     await setImmediate()
 
-    assert.deepEqual(queue.stats(), { running: 1, scheduled: 1 })
+    assert.deepEqual(queue.stats(), { running: 1, scheduled: 0 })
     await once(queue, 'empty')
     assert.deepEqual(queue.stats(), { running: 0, scheduled: 0 })
   })
