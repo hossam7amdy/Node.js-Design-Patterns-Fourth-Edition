@@ -1,0 +1,16 @@
+{
+  "name": "exercise-01-slugify",
+  "version": "1.0.0",
+  "description": "slugify: turns a string into a URL-friendly slug",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {},
+  "engines": {
+    "node": ">=24"
+  },
+  "engineStrict": true,
+  "keywords": [],
+  "author": "Hossam Hamdy <hossamhamdy117@gmail.com>",
+  "license": "MIT",
+  "dependencies": {}
+}
