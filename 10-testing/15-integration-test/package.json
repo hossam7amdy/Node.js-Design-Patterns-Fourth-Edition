@@ -11,8 +11,5 @@
   "keywords": [],
   "author": "Luciano Mammino and Mario Casciaro",
   "license": "MIT",
-  "dependencies": {
-    "sqlite": "^5.1.1",
-    "sqlite3": "^5.1.7"
-  }
+  "dependencies": {}
 }
