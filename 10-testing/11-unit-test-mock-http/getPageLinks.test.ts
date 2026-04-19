@@ -5,7 +5,7 @@ import { getInternalLinks } from './getPageLinks.ts'
 
 suite('getPageLinks', { concurrency: true, timeout: 500 }, () => {
   // naive implementation (real HTTP request)
-  test.skip('It fetches all the internal links from a page', async () => {
+  test('It fetches all the internal links from a page', async () => {
     const links = await getInternalLinks('https://loige.co')
     assert.deepEqual(
       links,

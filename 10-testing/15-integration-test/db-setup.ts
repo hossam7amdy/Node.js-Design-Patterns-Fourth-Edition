@@ -1,4 +1,4 @@
-import type { DbClient } from "./db-client.ts";
+import type { DbClient } from './db-client.ts'
 
 export async function createTables(db: DbClient): Promise<void> {
   await db.query(`
@@ -6,7 +6,7 @@ export async function createTables(db: DbClient): Promise<void> {
       id TEXT PRIMARY KEY,
       name TEXT NOT NULL
     )
-  `);
+  `)
 
   await db.query(`
     CREATE TABLE IF NOT EXISTS vouchers (
@@ -15,5 +15,5 @@ export async function createTables(db: DbClient): Promise<void> {
       balance REAL NOT NULL,
       expiresAt TIMESTAMP NOT NULL
     )
-  `);
+  `)
 }

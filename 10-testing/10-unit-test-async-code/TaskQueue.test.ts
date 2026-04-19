@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import { once } from 'node:events'
-import { suite, test, mock } from 'node:test'
+import { mock, suite, test } from 'node:test'
 import { setImmediate } from 'node:timers/promises'
 import { TaskQueue } from './TaskQueue.ts'
 

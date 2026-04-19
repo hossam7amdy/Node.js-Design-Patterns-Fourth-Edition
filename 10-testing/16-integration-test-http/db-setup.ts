@@ -1,4 +1,6 @@
-export async function createTables(db) {
+import type { DbClient } from './db-client.ts'
+
+export async function createTables(db: DbClient): Promise<void> {
   await db.query(`
     CREATE TABLE IF NOT EXISTS events (
       id TEXT PRIMARY KEY,

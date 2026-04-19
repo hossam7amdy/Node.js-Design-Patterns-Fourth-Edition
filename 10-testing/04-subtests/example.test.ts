@@ -5,7 +5,7 @@ test('Top Level Test', t => {
     // ..
   })
 
-  t.test('SubTest 2', t => {
+  t.test('SubTest 2', _t => {
     // ..
   })
 })

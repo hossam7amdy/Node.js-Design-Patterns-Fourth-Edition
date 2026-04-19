@@ -7,7 +7,7 @@ test('Top Level Test', { concurrency: true }, t => {
     await delay(1000)
   })
 
-  t.test('SubTest 2', (t, done) => {
+  t.test('SubTest 2', (_t, done) => {
     setTimeout(done, 1000)
   })
 })

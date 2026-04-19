@@ -1,6 +1,6 @@
-import { createApp } from './app.js'
-import { DbClient } from './dbClient.js'
-import { createTables } from './dbSetup.js'
+import { createApp } from './app.ts'
+import { DbClient } from './db-client.ts'
+import { createTables } from './db-setup.ts'
 
 const db = new DbClient('data/db.sqlite')
 await createTables(db)

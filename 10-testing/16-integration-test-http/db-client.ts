@@ -1,13 +1,14 @@
-import { DatabaseSync, type SupportedValueType } from 'node:sqlite'
+import { DatabaseSync } from 'node:sqlite'
+import type { SQLInputValue } from 'node:sqlite'
 import { setImmediate } from 'node:timers/promises'
 
 export class DbClient {
-  #db: DatabaseSync | null
   #dbPath: string
+  #db: DatabaseSync | null
 
   constructor(dbPath: string) {
-    this.#dbPath = dbPath
     this.#db = null
+    this.#dbPath = dbPath
   }
 
   async #connect(): Promise<DatabaseSync> {
@@ -19,9 +20,10 @@ export class DbClient {
     return this.#db
   }
 
-  async query<T>(sql: string, params: SupportedValueType[] = []): Promise<T> {
+  async query<T>(sql: string, params: SQLInputValue[] = []): Promise<T> {
     const db = await this.#connect()
-    const result = db.prepare(sql).all(...params)
+    const statement = db.prepare(sql)
+    const result = statement.all(...params)
     return structuredClone(result) as T
   }
 
