@@ -1,0 +1,11 @@
+{
+  "name": "exercises-1-promise-all",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {},
+  "author": "Hossam Hamdy<hossamhamdy117@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^25.6.0"
+  }
+}

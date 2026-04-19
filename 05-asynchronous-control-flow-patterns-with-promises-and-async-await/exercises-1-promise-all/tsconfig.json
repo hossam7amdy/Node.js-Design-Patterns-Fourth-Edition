@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    /* Base Options: */
+    "noEmit": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "target": "esnext",
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "moduleDetection": "force",
+    "isolatedModules": true,
+    "erasableSyntaxOnly": true,
+    "verbatimModuleSyntax": true,
+    "rewriteRelativeImportExtensions": true,
+    /* Strictness */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noImplicitOverride": true,
+    "noUncheckedIndexedAccess": true,
+    /* Transpiling with TypeScript: */
+    "module": "nodenext",
+    "sourceMap": true,
+    /* Doesn't run in the DOM: */
+    "lib": ["ES2024"]
+  }
+}
