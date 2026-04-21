@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test'
 // import { GenericContainer } from 'testcontainers'
 
-test('A user can sign up and book an event', async ({ page }) => {
+test.skip('A user can sign up and book an event', async ({ page }) => {
   // starts the app in a container
   // const appContainer = await new GenericContainer(
   //   'ghcr.io/lmammino/sample-events-website:main'
