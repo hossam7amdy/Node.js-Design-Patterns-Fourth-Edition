@@ -1,7 +1,8 @@
 {
-  "name": "15-integration-test",
+  "name": "exercise-01-slugify",
   "version": "1.0.0",
-  "description": "Demonstrates how create an integration test",
+  "description": "slugify: turns a string into a URL-friendly slug",
+  "main": "index.js",
   "type": "module",
   "scripts": {},
   "engines": {
@@ -9,7 +10,7 @@
   },
   "engineStrict": true,
   "keywords": [],
-  "author": "Luciano Mammino and Mario Casciaro",
+  "author": "Hossam Hamdy <hossamhamdy117@gmail.com>",
   "license": "MIT",
   "dependencies": {}
 }

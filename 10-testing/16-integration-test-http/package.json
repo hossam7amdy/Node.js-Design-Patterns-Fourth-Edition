@@ -12,8 +12,9 @@
   "author": "Luciano Mammino and Mario Casciaro",
   "license": "MIT",
   "dependencies": {
-    "fastify": "^5.2.2",
-    "sqlite": "^5.1.1",
-    "sqlite3": "^5.1.7"
+    "fastify": "^5.8.5"
+  },
+  "devDependencies": {
+    "@types/node": "^25.6.0"
   }
 }
