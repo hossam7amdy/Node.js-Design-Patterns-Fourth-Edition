@@ -1,0 +1,26 @@
+{
+  "name": "exercise-07-the-spammers-heaven",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Minimal web application that serves a single HTML page with a newsletter sign-up form",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "node --import=tsx src/index.ts",
+    "start:dev": "node --import=tsx --watch src/index.ts"
+  },
+  "author": "Hossam Hamdy<hossamhamdy117@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "@fastify/formbody": "^8.0.2",
+    "@fastify/view": "^11.1.1",
+    "ejs": "^5.0.2",
+    "fastify": "^5.8.5"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.59.1",
+    "@types/ejs": "^3.1.5",
+    "@types/node": "^25.6.0",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.3"
+  }
+}
